@@ -44,13 +44,12 @@ This command generates a file (***trained_models/my_chembl210_training/CHEMBL210
 
 ## Restoring the Trained Model and Tests
 
- A trained model can be restored (deserialized) and it could be used for inference. 
+ #### How to test DEEPScreen model and get predictions 
 
-```
-#Later to restore:
-model.load_state_dict(torch.load(filepath))
-model.eval() 
-```
+- Clone the Git Repository
+- Download the compressed file for the chemical representations of compounds in ChEMBLv32 from  [here](https://www.dropbox.com/sh/as18uxmctnf39kc/AADUqZX3XAiQRU6UVp3SsBRXa?dl=0)
+- Move the compressed file under **training_files/** and unzip it
+- Run the **main_training.py** script as shown below
 
 By executing ***main_test.py***, the model for a target protein is restored and it can be used to screen (test or make a prediction for) a compound or a list of compounds.
 
@@ -61,6 +60,11 @@ The following is an example call for ***main_test.py*** script to perform tests 
 ```
 python main_test.py --targetid CHEMBL210 --modelfile DEEPScreen/trained_models/my_chembl210_training/CHEMBL210_best_val-CHEMBL210-CNNModel1-256-128-0.01-64-0.25-100-my_chembl210_training-state_dict.pth --testfile CHEMBL210_compounds.tsv
 ```
+
+Here is the explanation of parameters.
+`--targetid` target to be trained 
+`--modelfile`  trained model
+`--testfile`   compounds/drugs to be tested
 
 The file containing the compounds/drugs to be tested should be placed under ***test_files*** directory and its format is as follows. 
 A line starts with `targetid_act` (or `targetid_inact`) then, followed by a tab delimiter and a list of ChEMBL identifiers of active (inactive) compounds, separated by a comma. If no activity information is known *a priori*, user can insert the compounds in any of the two lists (in this case the user should ignore the performance evaluation scores).  
