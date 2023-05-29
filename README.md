@@ -62,8 +62,11 @@ python main_test.py --targetid CHEMBL210 --modelfile DEEPScreen/trained_models/m
 ```
 
 Here is the explanation of parameters.
+
 `--targetid` target to be trained 
+
 `--modelfile`  trained model
+
 `--testfile`   compounds/drugs to be tested
 
 The file containing the compounds/drugs to be tested should be placed under ***test_files*** directory and its format is as follows. 
