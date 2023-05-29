@@ -1,93 +1,78 @@
-# DEEPScreen: Virtual Screening with Deep Convolutional Neural Networks Using Compound Images
+# DEEPScreen: Virtual Screening with Deep Convolutional Neural Networks Using Compound Images-*with easy test scripts*
 
-* **Important notice**: This is the new version of DEEPScreen developed using PyTorch framework, please go the master branch of this repository to reach the old version and other information presented in the paper. We advice to use this new version of DEEPScreen to train target-specific models. Please note that this version is planned to be improved further by adding more functionalities. 
-* DEEPScreen is a large-scale DTI prediction system, for early stage drug discovery, using deep convolutional neural networks
-* One of the main advantages of DEEPScreen is employing readily available 2-D structural representations of compounds at the input level instead of conventional descriptors that display limited performance
-* DEEPScreen learns complex features inherently from the 2-D representations, thus producing highly accurate predictions.
-* More information can be obtained from [DEEPScreen journal article](https://doi.org/10.1039/C9SC03414E).
+DEEPScreen is a large-scale drug-target interaction (DTI) prediction system, for early-stage drug discovery, using deep convolutional neural networks. 
 
+One of the main advantages of DEEPScreen is employing readily  available 2-D structural representations of compounds at the input level instead of conventional descriptors. DEEPScreen learns complex features inherently from the 2-D representations, thus producing highly accurate predictions for virtual screening. DEEPScreen was developed using PyTorch framework.
 
-![alt text](https://github.com/cansyl/DEEPScreen/blob/master/DEEPScreen_Figure.png)
+More information can be obtained from [DEEPScreen journal article](https://doi.org/10.1039/C9SC03414E).
 
-## Installation
+#### What is new?
 
-DEEPScreen is a command-line prediction tool written in Python 3.7.1. DEEPScreen was developed and tested in MacOSx but it should run in any Unix-like operating system. Please run the below commands to install requirements for model training and testing. Dependencies are available in requirements.txt file which is located under bin directory.
+In the [original developed code for DEEPScreen](https://github.com/cansyl/DEEPScreen), the model is trained and tested using a single input file; that is, all of the training data and test data are stored in the same file and each time the script is executed, training has to be performed also. 
 
-```
-conda create -n deepscreen_env python=3.7
-source activate deepscreen_env
-pip install -r requirements.txt
-```
+This new version allows to perform tests (prediction/virtual screening) separate from training (using an already trained model).  
 
-## Descriptions of folders and files in the DEEPScreen repository
+Here, I explain the newly added functionalities and functions. 
 
-* **bin** folder includes the source code of DEEPScreen.
+## General Information
 
-* **training_files** folder includes the files directly used in the training and testing of the system:
-    * **chembl27_preprocessed_filtered_bioactivity_dataset.tsv.zip** updated version of ChEMBL preprocessed and filtered dataset contains drug/compound-target interactions from the ChEMBL database (v27) after the application of multiple filtering operations to obtain a clean training set,
-    * **chembl27_training_target_list.txt** list of target chembl ids,
-    * **target_training_datasets** contains a folder (e.g. CHEMBL286) for each target where each target folder contains 
-    	* a json file named  **train_val_test_dict.json** which includes train/validation/test compound ids,
-    	* a folder named **imgs** which holds images of compounds.
-       
-    * **chembl27_preprocessed_filtered_act_inact_comps_10.0_20.0_blast_comp_0.2.txt** contains the active and inactive compound information for each target protein in ChEMBL, after the similarity-based negative training dataset enrichment process. In this file, there are two lines for each target, in the following format:
-        
-        ```
-       CHEMBL286_act	CHEMBL1818056,CHEMBL2115367,CHEMBL344651,CHEMBL62054, ...
-       CHEMBL286_inact	CHEMBL288434,CHEMBL584926,CHEMBL406111,CHEMBL151055, ...
-       ```
-       
-       The list of active/inactive compounds separated by commas (i.e., the second tab seperated column: *CHEMBL1818056,C...*) for the correnponding target (i.e., the first column: *CHEMBL286_act*),
-       
-    * **chembl27_uniprot_mapping.txt** contains the id mapping between UniProt accessions and ChEMBL ids for proteins, in tab-separated format (Target UniProt accession, Target	ChEMBL id, Target protein name and Target type),
-    
-* **result_files** folder contains results of various tests/analyses:
+DEEPScreen is a command-line prediction tool written in Python. The [original repository](https://github.com/cansyl/DEEPScreen) came with a bundle of data and code, which I recently extended to include separate testing of a trained model. Here is the current directory structure: 
 
-* **2-D images of:** 
-   - 409,311 ChEMBL compounds in the train/validation/test datasets of 812 target proteins of DEEPScreen can be downloaded from [here](https://drive.google.com/file/d/1E7ZpLN_fMdXmPJPP7WH3IPWPceleP_3a/view?usp=sharing)
-   - all compounds (~2M) in ChEMBL v27 can be downloaded from [here](https://drive.google.com/file/d/16T8NI1Umf8A0qeLu90Akbx3ic-vdAbUO/view?usp=sharing)
-   - all drugs (~11K) in DrugBank v5.1.7 can be downloaded from [here](https://drive.google.com/file/d/11vSqg1SgX7y25TbX4EzNOjWNkSFVZzek/view?usp=sharing)
+- **bin**: source code including original and new script files (***main_test.py*** and ***test_DEEPScreen.py***)
+- **test_files**: input test file(s) (this is the new added directory)
+- **training_files:** files used in the training and test 
+- **result_files:** results of various tests/analyses
+- **trained_models:** already trained models 
 
-## How to train DEEPScreen models and get performance results 
+## Training and Model Generation 
 
-* Clone the Git Repository
+Training is explained in the original repository under the title [How to train DEEPScreen models and get performance results](https://github.com/cansyl/DEEPScreen#how-to-train-deepscreen-models-and-get-performance-results)
 
-* Download the compressed file for the target  that you want to train  [here](https://www.dropbox.com/sh/as18uxmctnf39kc/AADUqZX3XAiQRU6UVp3SsBRXa?dl=0)
+Remark that after training, the trained model is stored (serialized) in a file entitled 
 
-* Locate the zipped target file under **training_files/target_training_datasets** and unzip it
+***targetid_best_val-targetid-<hyperparameters_seperated by dash>-<experiment_name>-state_dict.pth***
 
-* Run the **main_training.py** script as shown below
+under ***trained_models/<experiment_name>/***
 
-## Explanation of Parameters
-
-* **--targetid**: Target to be trained (default: CHEMBL286)
-
-* **--model**: CNN architecture to be used (default: CNNModel1)
-
-* **--fc1**: number of neurons in the first fully-connected layer (default:512)
-
-* **--fc2**: number of neurons in the second fully-connected layer (default:256)
-
-* **--lr**:learning rate (default: 0.001)
-
-* **--bs**: batch size (default: 32)
-
-* **--dropout**: dropout rate (default: 0.1)
-
-* **--epoch**: number of epochs (default: 200)
-
-* **--en**: the name of the experiment (default: my_experiment)
-
-#### To perform training for a target (CHEMBL286 in the below example):
+The following is an example call for ***main_training.py*** script to perform training for CHEMBL210 as the target protein.
 
 ```
-python main_training.py --targetid CHEMBL286 --model CNNModel1 --fc1 256 --fc2 128 --lr 0.01 --bs 64 --dropout 0.25 --epoch 100 --en my_chembl286_training
+python main_training.py --targetid CHEMBL210 --model CNNModel1 --fc1 256 --fc2 128 --lr 0.01 --bs 64 --dropout 0.25 --epoch 100 --en my_chembl210_training
 ```
 
-#### Output of the scripts
-**main_training.py** creates a folder named **<experiment_name>** (given as argument **--en**)   under **result_files/experiments** folder. Two files are created under **results_files/experiments/<experiment_name>**:
-* **best_val_test_predictions-<hyperparameters_seperated by dash>-<experiment_name>.txt** contains predictions for independent test dataset. 
-* **best_val_test_performance_results-<hyperparameters_seperated by dash>-<experiment_name>.txt** which contains the best test performance results. Sample output files for ChEMBL286 target is given under  **results_files/experiments/my_chembl286_training**.
+This command generates a file (***trained_models/my_chembl210_training/CHEMBL210_best_val-CHEMBL210-CNNModel1-256-128-0.01-64-0.25-100-my_chembl210_training-state_dict.pth***) that contains a serialized PyTorch state dictionary . It is a Python dictionary that contains the state of a PyTorch model, including the model's weights, biases, and other parameters.
+
+## Restoring the Trained Model and Tests
+
+ A trained model can be restored (deserialized) and it could be used for inference. 
+
+```
+#Later to restore:
+model.load_state_dict(torch.load(filepath))
+model.eval() 
+```
+
+By executing ***main_test.py***, the model for a target protein is restored and it can be used to screen (test or make a prediction for) a compound or a list of compounds.
+
+***main_test.py*** calls ***test_DEEPScreen*** function, which first parses the input test file and generates 2D images of the compounds listed in the test file. The trained model is then restored, and the predictions for the test compounds are obtained.
+
+The following is an example call for ***main_test.py*** script to perform tests against CHEMBL210 using the model generated by the example call for ***main_training.py*** script to perform training for CHEMBL210 as the target protein.
+
+```
+python main_test.py --targetid CHEMBL210 --modelfile DEEPScreen/trained_models/my_chembl210_training/CHEMBL210_best_val-CHEMBL210-CNNModel1-256-128-0.01-64-0.25-100-my_chembl210_training-state_dict.pth --testfile CHEMBL210_compounds.tsv
+```
+
+The file containing the compounds/drugs to be tested should be placed under ***test_files*** directory and its format is as follows. 
+A line starts with `targetid_act` (or `targetid_inact`) then, followed by a tab delimiter and a list of ChEMBL identifiers of active (inactive) compounds, separated by a comma. If no activity information is known *a priori*, user can insert the compounds in any of the two lists (in this case the user should ignore the performance evaluation scores).  
+
+An example for CHEMBL210 is given below.
+
+```
+CHEMBL210_act	CHEMBL2111083,CHEMBL1084173,CHEMBL1095607,CHEMBL521589,CHEMBL3039518,CHEMBL1240967,CHEMBL1291,CHEMBL1290,CHEMBL471,CHEMBL27810,CHEMBL4297483,CHEMBL1095777,CHEMBL1002,CHEMBL926,CHEMBL605846,CHEMBL1363,CHEMBL1198857,CHEMBL649,CHEMBL1201295,CHEMBL714,CHEMBL1094785,CHEMBL776,CHEMBL160519,CHEMBL88055,CHEMBL1094966,CHEMBL2012520,CHEMBL546,CHEMBL1201237,CHEMBL1201273,CHEMBL83063,CHEMBL1760,CHEMBL49080,CHEMBL1197051,CHEMBL434394,CHEMBL768,CHEMBL27193,CHEMBL16476,CHEMBL1201213,CHEMBL500,CHEMBL32800,CHEMBL1263,CHEMBL499,CHEMBL1159717,CHEMBL321582,CHEMBL631,CHEMBL27,CHEMBL1940832,CHEMBL3039530,CHEMBL1256786
+CHEMBL210_inact
+```
+
+The output is displayed on the screen. First, the values of performance measures are displayed, and the list of compounds is given with their actual labels (if available) and predicted activity (1 for active and 0 for inactive). 
 
 ## Article
 
@@ -97,8 +82,8 @@ Rifaioglu, A. S., Nalbat, E., Atalay, V., Martin, M. J., Cetin-Atalay, R., & DoÄ
 
 ## License
 
-DEEPScreen
-    Copyright (C) 2020 CanSyL
+DEEPScreenWithTest
+    Copyright (C) 2023 CanSyL and M Volkan Atalay
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
