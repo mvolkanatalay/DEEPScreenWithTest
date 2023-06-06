@@ -46,10 +46,10 @@ This command generates a file (***trained_models/my_chembl210_training/CHEMBL210
 
  #### How to test DEEPScreen model and get predictions 
 
-- Clone the Git Repository
-- Download the compressed file for the chemical representations of compounds in ChEMBLv32 from  [here](https://drive.google.com/file/d/1QAvY9eddFfVL3yJ2-UATeNsPhOxYtkGr/view?usp=share_link)
-- Move the compressed file under **training_files/** and unzip it
-- Run the **main_training.py** script as shown below
+1. Clone the Git Repository
+2. Download the compressed file for the chemical representations of compounds in ChEMBLv32 from  [here](https://drive.google.com/file/d/1QAvY9eddFfVL3yJ2-UATeNsPhOxYtkGr/view?usp=share_link)
+3. Move the compressed file under **training_files/** and unzip it
+4. Run the **main_training.py** script as shown below
 
 By executing ***main_test.py***, the model for a target protein is restored and it can be used to screen (test or make a prediction for) a compound or a list of compounds.
 
