@@ -82,11 +82,13 @@ CHEMBL210_inact
 
 The output is displayed on the screen. First, the values of performance measures are displayed, and the list of compounds is given with their actual labels (if available) and predicted activity (1 for active and 0 for inactive). 
 
-## Article
+## Articles
 
 If you use DEEPScreen please consider citing:
 <br></br>
-Rifaioglu, A. S., Nalbat, E., Atalay, V., Martin, M. J., Cetin-Atalay, R., & Doğan, T. (2020). DEEPScreen: high performance drug–target interaction prediction with convolutional neural networks using 2-D structural compound representations. *Chemical Science, 11*(9), 2531-2557.
+Rifaioglu, A. S., Nalbat, E., Atalay, V., Martin, M. J., Cetin-Atalay, R., & Doğan, T. (2020). [DEEPScreen: high performance drug–target interaction prediction with convolutional neural networks using 2-D structural compound representations](https://pubs.rsc.org/en/content/articlelanding/2020/sc/c9sc03414e). *Chemical Science, 11*(9), 2531-2557.
+
+There is also an article in Medium entitled [A Deep Learning-based Tutorial for the Early Stages of Drug Discovery](https://link.medium.com/CycfujJYQAb)
 
 ## License
 
