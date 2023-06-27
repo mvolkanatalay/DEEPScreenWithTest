@@ -1,4 +1,4 @@
-# DEEPScreen: Virtual Screening with Deep Convolutional Neural Networks Using Compound Images-*with easy test scripts*
+# DEEPScreen: Virtual Screening with Deep Convolutional Neural Networks Using Compound Images-*with test scripts*
 
 DEEPScreen is a large-scale drug-target interaction (DTI) prediction system, for early-stage drug discovery, using deep convolutional neural networks. 
 
