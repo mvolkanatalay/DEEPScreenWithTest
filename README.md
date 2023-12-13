@@ -1,5 +1,7 @@
 # DEEPScreen: Virtual Screening with Deep Convolutional Neural Networks Using Compound Images-*with test scripts*
 
+M. Volkan Atalay
+
 DEEPScreen is a large-scale drug-target interaction (DTI) prediction system, for early-stage drug discovery, using deep convolutional neural networks. 
 
 One of the main advantages of DEEPScreen is employing readily  available 2-D structural representations of compounds at the input level instead of conventional descriptors. DEEPScreen learns complex features inherently from the 2-D representations, thus producing highly accurate predictions for virtual screening. DEEPScreen was developed using PyTorch framework.
